@@ -1,6 +1,7 @@
 const User = require('../models/user');
 const jwt =  require('jsonwebtoken');
 const keys = require('../config/keys');
+const Rol = require('../models/rol');
 
 module.exports={
     async getAll(req,res,next){
@@ -24,10 +25,10 @@ module.exports={
         try {
             const user = req.body;
             const data = await User.create(user);
-
+            await Rol.create(data.id,1);
             return res.status(201).json({
                 success: true,
-                message: 'OK',
+                message: 'Registro exitoso',
                 data: data.id
             });
                      
@@ -70,8 +71,10 @@ module.exports={
                     email: myUser.email,
                     phone: myUser.phone,
                     image: myUser.image,
-                    session_token: `JWT ${token}`
+                    session_token: `JWT ${token}`,
+                    roles: myUser.roles
                 };
+                console.log(`Usuario  ${data}`);
                 return res.status(201).json({
                     success: true,
                     data: data,

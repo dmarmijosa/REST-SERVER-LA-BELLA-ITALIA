@@ -11,7 +11,7 @@ User.getAll=()=>{
 User.create=(user)=>{
     const myPassCrypto = crypto.createHash('md5').update(user.password).digest('hex');
     user.password = myPassCrypto;
-    const sql = `INSERT INTO users(email,name,lastname, phone,image,password,created_at,update_at) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING id`
+    const sql = `INSERT INTO users(email,name,lastname, phone,image,password,created_at,updated_at) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING id`
     return db.oneOrNone(sql,[
         user.email,
         user.name,
@@ -42,21 +42,41 @@ User.findById= async (id,callback)=>{
     const user = await db.oneOrNone(sql, id);
     callback(null, user);
 }
+
 User.findByEmail=(email)=>{
     const sql = `
     select 
-        id,
-        email,
-        name,
-        lastname,
-        image,
-        phone,
-        password,
-        session_token
+        u.id,
+        u.email,
+        u.name,
+        u.lastname,
+        u.image,
+        u.phone,
+        u.password,
+        u.session_token,
+        json_agg(
+            json_build_object(
+                'id', r.id,
+                'name',r.name,
+                'image',r.image,
+                'route',r.route
+            )
+        )as roles
     from
-	    users
+        users as u
+    INNER JOIN
+        user_has_roles as uhr
+    on
+        uhr.id_user = u.id
+    INNER JOIN
+        roles as r
+    on
+        r.id = uhr.id_rol
     where
-	    email = $1`;
+        u.email = $1
+    GROUP BY
+        u.id
+`;
     return db.oneOrNone(sql,email);
 }
 
