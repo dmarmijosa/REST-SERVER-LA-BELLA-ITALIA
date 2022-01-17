@@ -3,12 +3,29 @@ const http = require('http');
 
 const logger = require('morgan');
 const cors = require('cors');
-const { status } = require('express/lib/response');
+
+const multer = require('multer');
+const admin = require('firebase-admin');
+const ServiceAccout = require('./serviceAccountKey.json');
+
+const passport = require('passport');
+
+/*
+* Firebase
+*/
+admin.initializeApp({
+    credential: admin.credential.cert(ServiceAccout)
+})
+
+const upload = multer({
+    storage: multer.memoryStorage()
+})
 
 const app = express();
 const server = http.createServer(app);
 
 const users = require('./routes/usersRoutes');
+
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -16,6 +33,9 @@ app.use(express.urlencoded({
     extended:true
 }));
 app.use(cors());
+app.use(passport.initialize());
+app.use(passport.session());
+require('./config/passport')(passport);
 
 app.disable('x-powered-by');
 
@@ -25,7 +45,7 @@ app.set('port',port);
 /*
  * Rutas
  */
-users(app);
+users(app,upload);
 
 
 server.listen(3000,'192.168.1.150', function(){
