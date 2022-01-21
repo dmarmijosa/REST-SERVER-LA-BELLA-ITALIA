@@ -25,8 +25,8 @@ const app = express();
 const server = http.createServer(app);
 
 const users = require('./routes/usersRoutes');
-
-
+const category = require('./routes/categoryRoutes');
+const product = require('./routes/productRoutes');
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({
@@ -46,7 +46,8 @@ app.set('port',port);
  * Rutas
  */
 users(app,upload);
-
+category(app);
+product(app, upload);
 
 server.listen(3000,'192.168.1.150', function(){
     console.log('App corriendo');
