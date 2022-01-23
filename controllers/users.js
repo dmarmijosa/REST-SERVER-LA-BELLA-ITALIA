@@ -72,7 +72,7 @@ module.exports={
             console.log(`Error: ${error}`);
             return res.status(501).json({
                 success: false,
-                message: 'Hubo un error con el registro del usuario',
+                message: 'Error al crear la cuenta revise si el correo no fue usado anteriormente.',
                 error: error
             });
         }
@@ -237,7 +237,37 @@ module.exports={
                 error: error
             });
         }
+    },
+    async findbyEmailUser(req,res,next){
+        try{
+            const email = req.params.email;
+            const myUser =  await User.findByEmail(email);
+            
+            if(myUser){
+                
+                return res.status(401).json({
+                    success: false,
+                    message: 'El correo ya ha sido registrado'
+
+                });
+            }else{
+                return res.status(201).json({
+                    success: true,
+                    message: 'Correo no encontrado'
+
+                });
+            }
+
+        } catch (error) {
+            console.log(error);
+            return res.status(501).json({
+                
+                success: false,
+                message: 'Error al obtener usuarios'
+            })
+        }
     }
+
 
     
     

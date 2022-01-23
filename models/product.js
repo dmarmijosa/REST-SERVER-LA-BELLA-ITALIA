@@ -1,6 +1,6 @@
 const db = require('../config/config');
 const Product={};
-Product.create=(product)=>{
+Product.create = (product) => {
     const sql = `
     INSERT INTO
         products(
@@ -28,7 +28,6 @@ Product.create=(product)=>{
         new Date()
     ]);
 }
-
 Product.update = (product) => {
     const sql = `
     UPDATE
