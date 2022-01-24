@@ -35,11 +35,11 @@ module.exports={
         try {
             const data = await User.getAll();
             console.log(`usuarios ${data}`);
-            return res.status(201).json(data);
+            return res.status(200).json(data);
 
         } catch (error) {
             console.log(error);
-            return res.status(501).json({
+            return res.status(500).json({
                 
                 success: false,
                 message: 'Error al obtener usuarios'
@@ -62,7 +62,7 @@ module.exports={
             }
             const data = await User.create(user);
             await Rol.create(data.id,1);
-            return res.status(201).json({
+            return res.status(200).json({
                 success: true,
                 message: 'Registro exitoso',
                 data: data.id
@@ -70,7 +70,7 @@ module.exports={
                      
         } catch (error) {
             console.log(`Error: ${error}`);
-            return res.status(501).json({
+            return res.status(500).json({
                 success: false,
                 message: 'Error al crear la cuenta revise si el correo no fue usado anteriormente.',
                 error: error
@@ -91,7 +91,7 @@ module.exports={
                 }
             }
             await User.update(user);
-            return res.status(201).json({
+            return res.status(200).json({
                 success: true,
                 message: 'Actualización exitosa',
                 
@@ -99,7 +99,7 @@ module.exports={
                      
         } catch (error) {
             console.log(`Error: ${error}`);
-            return res.status(501).json({
+            return res.status(500).json({
                 success: false,
                 message: 'Hubo un error con la actualización del usuario',
                 error: error
@@ -113,11 +113,11 @@ module.exports={
 
             const data = await User.findByUserId(id);    
             console.log(`Usuario: ${data}`);
-            return res.status(201).json(data);
+            return res.status(200).json(data);
         } 
         catch (error) {
             console.log(`Error: ${error}`);
-            return res.status(501).json({
+            return res.status(500).json({
                 success: false,
                 message: 'Error al obtener el usuario por ID'
             });
@@ -139,7 +139,7 @@ module.exports={
                 transporter.sendMail(mailOptions);
                 await updatePassword(email,password);
                 
-                return res.status(201).json({
+                return res.status(200).json({
                     success: true,
                     message: 'Clave temporal enviada a su correo'
 
@@ -154,7 +154,7 @@ module.exports={
 
         } catch (error) {
             console.log(error);
-            return res.status(501).json({
+            return res.status(500).json({
                 
                 success: false,
                 message: 'Error al obtener usuarios'
@@ -197,7 +197,7 @@ module.exports={
                 };
                 await User.updateToken(myUser.id,  `JWT ${token}`)
                 console.log(`Usuario  ${data}`);
-                return res.status(201).json({
+                return res.status(200).json({
                     success: true,
                     data: data,
                     message: 'Usuario auntentificado'
@@ -212,7 +212,7 @@ module.exports={
             
         } catch (error) {
             console.log(`Error: ${error}`);
-            return res.status(501).json({
+            return res.status(500).json({
                 success: false,
                 message: 'Error al momento de ingresar',
                 error: error
@@ -224,14 +224,14 @@ module.exports={
         try {
             const id = req.body.id;
             await User.updateToken(id,null);
-            return res.status(201).json({
+            return res.status(200).json({
                 success: true,
                 message: 'Sessión cerrada correctamente'
             })
             
         } catch (error) {
             console.log(`Error: ${error}`);
-            return res.status(501).json({
+            return res.status(500).json({
                 success: false,
                 message: 'Error en login',
                 error: error
@@ -251,7 +251,7 @@ module.exports={
 
                 });
             }else{
-                return res.status(201).json({
+                return res.status(200).json({
                     success: true,
                     message: 'Correo no encontrado'
 
@@ -260,7 +260,7 @@ module.exports={
 
         } catch (error) {
             console.log(error);
-            return res.status(501).json({
+            return res.status(500).json({
                 
                 success: false,
                 message: 'Error al obtener usuarios'

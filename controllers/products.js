@@ -1,7 +1,7 @@
 const storage = require('../utils/cloud_storage');
 const asyncforEach = require('../utils/async_foreach');
 
-const Producto = require('../models/product');
+const Product = require('../models/product');
 
 module.exports={
     async create(req, res, next) {
@@ -17,7 +17,7 @@ module.exports={
         }else{
             try {
                 
-                const data = await Producto.create(product);
+                const data = await Product.create(product);
                 product.id = data.id
 
                 const start = async()=>{
@@ -30,11 +30,11 @@ module.exports={
                             }
                             else if(inserts==1){
                                 product.image2 = url;
-                            }else if(inserts==3){
+                            }else if(inserts==2){
                                 product.image3 = url;
                             }
                         }
-                        await Producto.update(product);
+                        await Product.update(product);
                         inserts =inserts+1;
                         if (inserts == files.length) {
                             return res.status(201).json({
@@ -53,10 +53,27 @@ module.exports={
                     message:`Error al registrar el producto ${error}`,
                     success:false,
                     error:error
-                })
+                });
             }
         }
 
     },
+
+    async findByCategory(req,res,next){
+        try {
+            const id_category = req.params.id_category;
+            const data = await Product.findByCategory(id_category);
+            return res.status(201).json(data);
+            
+        } catch (error) {
+            console.log(error);
+                return res.status(501).json({
+                    message:`Error al obtener los productos por categoria`,
+                    success:false,
+                    error:error
+                })
+        }
+
+    }
     
 }
