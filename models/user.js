@@ -7,6 +7,19 @@ User.getAll=()=>{
     const sql = `SELECT * FROM users`;
     return db.manyOrNone(sql);
 };
+User.getStateRestaurant=()=>{
+    const sql=`
+    SELECT
+        U.is_avaiable
+    FROM
+        users AS U
+    INNER JOIN
+        user_has_roles AS C
+    ON
+        U.id = C.id_user and id_rol=2    
+    `;
+    return db.manyOrNone(sql);
+}
 
 User.create=(user)=>{
     const myPassCrypto = crypto.createHash('md5').update(user.password).digest('hex');
@@ -42,11 +55,6 @@ User.findById= async (id,callback)=>{
     const user = await db.oneOrNone(sql, id);
     callback(null, user);
 }
-
-
-
-
-
 User.update = (user) => {
     const myPassCrypto = crypto.createHash('md5').update(user.password).digest('hex');
     user.password = myPassCrypto;
@@ -75,6 +83,24 @@ User.update = (user) => {
     ]);
 }
 
+User.updateRestaurant = (id, is_avaiable) => {
+    
+    const sql = `
+    UPDATE
+        users
+    SET
+        is_avaiable = $2,
+        updated_at = $3
+    WHERE
+        id = $1
+    `;
+
+    return db.none(sql, [
+        id,
+        is_avaiable,
+        new Date()
+    ]);
+}
 User.updateToken = (id,token) => {
     const sql = `
     UPDATE
@@ -129,7 +155,6 @@ User.findByUserId = (id) => {
     `
     return db.oneOrNone(sql, id);
 }
-
 
 User.findByEmail = (email) => {
     const sql = `
@@ -187,6 +212,8 @@ updatePassword = (email, password) => {
     ]);
 }
 
+
+
 User.isPasswordMatch = (userPassword,hash)=>{
     const myPasswordHashed = crypto.createHash('md5').update(userPassword).digest('hex');
     if (myPasswordHashed === hash) {
@@ -195,5 +222,3 @@ User.isPasswordMatch = (userPassword,hash)=>{
     return false;
 }
 module.exports = User;
-
-

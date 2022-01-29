@@ -27,6 +27,9 @@ const server = http.createServer(app);
 const users = require('./routes/usersRoutes');
 const category = require('./routes/categoryRoutes');
 const product = require('./routes/productRoutes');
+const address = require('./routes/addressRoutes');
+
+
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({
@@ -48,6 +51,7 @@ app.set('port',port);
 users(app,upload);
 category(app);
 product(app, upload);
+address(app, upload);
 
 server.listen(3000,'192.168.1.150', function(){
     console.log('App corriendo');

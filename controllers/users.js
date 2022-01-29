@@ -34,7 +34,7 @@ module.exports={
     async getAll(req,res,next){
         try {
             const data = await User.getAll();
-            console.log(`usuarios ${data}`);
+           // console.log(`usuarios ${data}`);
             return res.status(200).json(data);
 
         } catch (error) {
@@ -46,6 +46,44 @@ module.exports={
             })
         }
     },
+
+    async getIsAvaiableRestaurant(req,res,next){
+        try {
+            const data = await User.getStateRestaurant();    
+            console.log(data[0].is_avaiable);
+            return res.status(200).json(data[0].is_avaiable);
+        } 
+        catch (error) {
+            console.log(`Error: ${error}`);
+            return res.status(500).json({
+                success: false,
+                message: 'Error al obtener el usuario por ID'
+            });
+        }
+
+    },
+    async updateStateRestaurant(req, res, next) {
+        try {
+            const data = await User.getStateRestaurant();    
+            const id = (req.params.id);
+            const is_avaiable = !data[0].is_avaiable;
+            await User.updateRestaurant(id,is_avaiable);
+            return res.status(200).json({
+                success: true,
+                message: 'OK!!',
+            });
+                     
+        } catch (error) {
+            console.log(`Error: ${error}`);
+            return res.status(500).json({
+                success: false,
+                message: 'Hubo un error con el estado del resturant',
+                error: error
+            });
+        }
+    },
+
+  
 
     
     async registerWithImage(req,res,next){
@@ -191,12 +229,13 @@ module.exports={
                     lastname: myUser.lastname,
                     email: myUser.email,
                     phone: myUser.phone,
+                    is_avaiable: myUser.is_avaiable,
                     image: myUser.image,
                     session_token: `JWT ${token}`,
                     roles: myUser.roles
                 };
                 await User.updateToken(myUser.id,  `JWT ${token}`)
-                console.log(`Usuario  ${data}`);
+                console.log(`Usuario  ${myUser.is_avaiable}`);
                 return res.status(200).json({
                     success: true,
                     data: data,
