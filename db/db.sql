@@ -94,6 +94,7 @@ CREATE TABLE order_has_products(
 	id_order BIGINT NOT NULL,
 	id_product BIGINT NOT NULL,
 	quantity BIGINT NOT NULL,
+	detail VARCHAR(200) NULL,
 	created_at TIMESTAMP(0) NOT NULL,
 	updated_at TIMESTAMP(0) NOT NULL,
 	PRIMARY KEY(id_order, id_product),

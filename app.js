@@ -28,6 +28,7 @@ const users = require('./routes/usersRoutes');
 const category = require('./routes/categoryRoutes');
 const product = require('./routes/productRoutes');
 const address = require('./routes/addressRoutes');
+const order = require('./routes/orderRoutes');
 
 
 app.use(logger('dev'));
@@ -49,9 +50,10 @@ app.set('port',port);
  * Rutas
  */
 users(app,upload);
-category(app);
 product(app, upload);
-address(app, upload);
+category(app);
+address(app);
+order(app);
 
 server.listen(3000,'192.168.1.150', function(){
     console.log('App corriendo');
