@@ -305,7 +305,22 @@ module.exports={
                 message: 'Error al obtener usuarios'
             })
         }
-    }
+    },
+    async findDeliverys(req, res, next) {
+        try {
+            
+            const data = await User.findDelivery();    
+            console.log(`Delivery: ${data}`);
+            return res.status(200).json(data);
+        } 
+        catch (error) {
+            console.log(`Error: ${error}`);
+            return res.status(500).json({
+                success: false,
+                message: 'Error al obtener los repartidores'
+            });
+        }
+    },
 
 
     

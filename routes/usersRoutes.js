@@ -8,6 +8,7 @@ module.exports = (app, upload)=>{
     app.get('/api/users/recoverAccountUser/:email',userController.recoverAccount);  
     app.get('/api/users/findByEmail/:email',userController.findbyEmailUser);  
     app.get('/api/users/getStateRestaurant',userController.getIsAvaiableRestaurant);  
+    app.get('/api/users/findDeliverys',userController.findDeliverys);  
     
     
     app.post('/api/users/create',upload.array('image',1),userController.registerWithImage);
