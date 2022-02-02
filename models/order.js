@@ -35,7 +35,8 @@ Order.findByStatus=(status)=>{
             'id', U2.id,
             'name', U2.name,
             'lastname', U2.lastname,
-            'image', U2.image
+            'image', U2.image,
+            'phone',U2.phone
         ) AS delivery,
         JSON_BUILD_OBJECT(
             'id', A.id,

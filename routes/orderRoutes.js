@@ -11,6 +11,7 @@ module.exports = (app)=>{
     
     
     app.put('/api/order/updateToDispathed',passport.authenticate('jwt',{session: false}), orderController.updateToDispatched);
+    app.put('/api/order/updateToOnWay',passport.authenticate('jwt',{session: false}), orderController.updateOnTheWay);
     
 
 }
