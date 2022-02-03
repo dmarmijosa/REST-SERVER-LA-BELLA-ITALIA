@@ -7,7 +7,7 @@ module.exports={
         try {
             const status = req.params.status;
             const data = await Order.findByStatus(status);
-            console.log(`Status ${JSON.stringify(data)}`);
+            
             return res.status(201).json(data);
         } 
         catch (error) {
@@ -112,6 +112,30 @@ module.exports={
             });
         }
     },
+    async updateToDispatchedBack(req, res, next) {
+        try {
+            
+            let order = req.body;
+            order.status = 'DESPACHADA';
+            order.id_delivery=null;
+            await Order.update(order);
+            
+
+            return res.status(201).json({
+                success: true,
+                message: 'La orden se actualizo correctamente',
+            });
+
+        } 
+        catch (error) {
+            console.log(`Error ${error}`);    
+            return res.status(501).json({
+                success: false,
+                message: 'Hubo un error al actualizar la orden',
+                error: error
+            });
+        }
+    },
 
     async updateOnTheWay(req, res, next) {
         try {
@@ -181,5 +205,30 @@ module.exports={
                 error: error
             });
         }
-    }
+    },
+    async updateSToCancel(req, res, next) {
+        try {
+            
+            let order = req.body;
+            order.status = 'CANCELADA';
+            await Order.update(order);
+            console.log(order);
+
+            return res.status(201).json({
+                success: true,
+            
+                message: 'La orden se actualizo correctamente',
+            });
+
+
+        } 
+        catch (error) {
+            console.log(`Error ${error}`);    
+            return res.status(501).json({
+                success: false,
+                message: 'Hubo un error al actualizar la orden',
+                error: error
+            });
+        }
+    },
 }

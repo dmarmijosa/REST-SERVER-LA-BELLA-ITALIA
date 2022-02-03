@@ -11,7 +11,10 @@ module.exports = (app)=>{
     
     
     app.put('/api/order/updateToDispathed',passport.authenticate('jwt',{session: false}), orderController.updateToDispatched);
+    app.put('/api/order/updateToDispathedBack',passport.authenticate('jwt',{session: false}), orderController.updateToDispatchedBack);
     app.put('/api/order/updateToOnWay',passport.authenticate('jwt',{session: false}), orderController.updateOnTheWay);
+    app.put('/api/order/updateToDelivered',passport.authenticate('jwt',{session: false}), orderController.updateToDelivered);
+    app.put('/api/order/updateToCancel',passport.authenticate('jwt',{session: false}), orderController.updateSToCancel);
     
 
 }
