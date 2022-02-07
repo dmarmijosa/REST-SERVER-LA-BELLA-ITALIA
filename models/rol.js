@@ -20,4 +20,22 @@ Rol.create=(id_user, id_rol)=>{
     ]);
 }
 
+Rol.findByDataRestaurant=()=>{
+    const sql=`
+    SELECT 
+        u.id,
+        u.name,
+        u.lastname,
+        u.phone,
+        u.email
+    FROM users as u
+    INNER JOIN
+        user_has_roles AS uhr
+    ON 
+        uhr.id_rol =2 AND u.id = uhr.id_user
+    `;
+    return db.oneOrNone(sql);
+
+}
+
 module.exports = Rol;

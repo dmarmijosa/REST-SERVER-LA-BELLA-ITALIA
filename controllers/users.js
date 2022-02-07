@@ -34,7 +34,7 @@ module.exports={
     async getAll(req,res,next){
         try {
             const data = await User.getAll();
-           // console.log(`usuarios ${data}`);
+     
             return res.status(200).json(data);
 
         } catch (error) {
@@ -50,7 +50,7 @@ module.exports={
     async getIsAvaiableRestaurant(req,res,next){
         try {
             const data = await User.getStateRestaurant();    
-            console.log(data[0].is_avaiable);
+  
             return res.status(200).json(data[0].is_avaiable);
         } 
         catch (error) {
@@ -150,7 +150,6 @@ module.exports={
             const id = req.params.id;
 
             const data = await User.findByUserId(id);    
-            console.log(`Usuario: ${data}`);
             return res.status(200).json(data);
         } 
         catch (error) {
@@ -158,6 +157,21 @@ module.exports={
             return res.status(500).json({
                 success: false,
                 message: 'Error al obtener el usuario por ID'
+            });
+        }
+    },
+    async findByRol(req, res, next) {
+        try {
+
+
+            const data = await Rol.findByDataRestaurant();    
+            return res.status(200).json(data);
+        } 
+        catch (error) {
+            console.log(`Error: ${error}`);
+            return res.status(500).json({
+                success: false,
+                message: 'Error al obtener el usuario por Rol'
             });
         }
     },
@@ -235,7 +249,7 @@ module.exports={
                     roles: myUser.roles
                 };
                 await User.updateToken(myUser.id,  `JWT ${token}`)
-                console.log(`Usuario  ${myUser.is_avaiable}`);
+               
                 return res.status(200).json({
                     success: true,
                     data: data,
@@ -310,7 +324,7 @@ module.exports={
         try {
             
             const data = await User.findDelivery();    
-            console.log(`Delivery: ${data}`);
+       
             return res.status(200).json(data);
         } 
         catch (error) {

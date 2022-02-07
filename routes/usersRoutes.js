@@ -5,6 +5,7 @@ module.exports = (app, upload)=>{
     
     app.get('/api/users/getAll',userController.getAll);
     app.get('/api/users/findById/:id',passport.authenticate('jwt',{session: false}),userController.findById);  
+    app.get('/api/users/findByRol',passport.authenticate('jwt',{session: false}),userController.findByRol);  
     app.get('/api/users/recoverAccountUser/:email',userController.recoverAccount);  
     app.get('/api/users/findByEmail/:email',userController.findbyEmailUser);  
     app.get('/api/users/getStateRestaurant',userController.getIsAvaiableRestaurant);  

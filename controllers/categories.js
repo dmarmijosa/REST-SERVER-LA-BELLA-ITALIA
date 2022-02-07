@@ -21,7 +21,7 @@ module.exports ={
             const id = req.params.id;
 
             const data = await Category.findByCategoryId(id);    
-            console.log(`Categoria: ${data}`);
+            
             return res.status(201).json(data);
         } 
         catch (error) {
@@ -35,8 +35,7 @@ module.exports ={
     async create(req, res, next) {
         try {
             const category = req.body;
-            console.log(`Categoria enviada: ${category}`);
-
+            
             const data = await Category.create(category);
 
             return res.status(201).json({
@@ -59,7 +58,7 @@ module.exports ={
     async update(req, res, next) {
         try {
             const category = JSON.parse(req.body.category);
-            console.log(`Datos enviados: ${JSON.stringify(category)}`);
+           
             
             await Category.updateCategory(category);
             return res.status(201).json({

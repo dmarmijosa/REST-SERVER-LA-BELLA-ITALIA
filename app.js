@@ -4,11 +4,30 @@ const http = require('http');
 const logger = require('morgan');
 const cors = require('cors');
 
+const app = express();
+const server = http.createServer(app);
+
+const users = require('./routes/usersRoutes');
+const category = require('./routes/categoryRoutes');
+const product = require('./routes/productRoutes');
+const address = require('./routes/addressRoutes');
+const order = require('./routes/orderRoutes');
+
+
 const multer = require('multer');
 const admin = require('firebase-admin');
 const ServiceAccout = require('./serviceAccountKey.json');
 
 const passport = require('passport');
+const io = require('socket.io')(server);
+
+/*
+* Socket
+*/
+
+const orderDelivery = require('./sockets/orders_delivery_socket');
+
+
 
 /*
 * Firebase
@@ -21,14 +40,6 @@ const upload = multer({
     storage: multer.memoryStorage()
 })
 
-const app = express();
-const server = http.createServer(app);
-
-const users = require('./routes/usersRoutes');
-const category = require('./routes/categoryRoutes');
-const product = require('./routes/productRoutes');
-const address = require('./routes/addressRoutes');
-const order = require('./routes/orderRoutes');
 
 
 app.use(logger('dev'));
@@ -44,6 +55,8 @@ require('./config/passport')(passport);
 app.disable('x-powered-by');
 
 const port = process.env.PORT || 3000;
+
+orderDelivery(io);
 
 app.set('port',port);
 /*

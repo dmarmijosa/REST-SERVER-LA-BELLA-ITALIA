@@ -27,7 +27,7 @@ module.exports={
             order.status = 'CREADA';
             const data = await Order.create(order);
             
-            console.log('LA ORDEN SE CREO CORRECTAMENTE');
+           
 
             for (const product of order.products) {
                 await OrderHasProduct.create(data.id, product.id, product.quantity, product.detail);
@@ -56,7 +56,7 @@ module.exports={
             const status = req.params.status;
 
             const data = await Order.findByDeliveryAndStatus(id_delivery, status);
-            console.log(`Status delivery ${JSON.stringify(data)}`);
+          
             return res.status(201).json(data);
         } 
         catch (error) {
@@ -193,7 +193,7 @@ module.exports={
             
             return res.status(201).json({
                 success: true,
-                message: 'La orden se actualizo correctamente',
+                message: 'La ubicación se actualizo correctamente',
             });
 
         } 
@@ -212,7 +212,7 @@ module.exports={
             let order = req.body;
             order.status = 'CANCELADA';
             await Order.update(order);
-            console.log(order);
+         
 
             return res.status(201).json({
                 success: true,
