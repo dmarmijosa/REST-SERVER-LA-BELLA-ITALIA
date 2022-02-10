@@ -6,11 +6,11 @@ module.exports={
             const id_user = req.params.id_user;
             const data = await Address.findByUser(id_user);
            
-            return res.status(201).json(data);
+            return res.status(200).json(data);
         } 
         catch (error) {
             console.log(`Error ${error}`);    
-            return res.status(501).json({
+            return res.status(500).json({
                 message: 'Hubo un error al tratar de obtener las direcciones',
                 error: error,
                 success: false
@@ -22,7 +22,7 @@ module.exports={
             const id = req.params.id;
             const data = await Address.delete(id);
             
-            return res.status(201).json({
+            return res.status(200).json({
                 success: true,
                 message: 'La dirección se ha eliminado.',
                 
@@ -30,7 +30,7 @@ module.exports={
         } 
         catch (error) {
             console.log(`Error ${error}`);    
-            return res.status(501).json({
+            return res.status(500).json({
                 message: 'Hubo un error al tratar de eliminar la dirección.',
                 error: error,
                 success: false
@@ -43,7 +43,7 @@ module.exports={
             const address = req.body;
             const data = await Address.create(address);
 
-            return res.status(201).json({
+            return res.status(200).json({
                 success: true,
                 message: 'La direccion se creo correctamente',
                 data: data.id

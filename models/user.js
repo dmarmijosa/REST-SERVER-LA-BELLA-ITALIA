@@ -47,7 +47,8 @@ User.findById= async (id,callback)=>{
         image,
         phone,
         password,
-        session_token
+        session_token,
+        notification_token
     from
 	    users
     where
@@ -117,6 +118,21 @@ User.updateToken = (id,token) => {
         token
     ]);
 }
+User.updateNotificationToken = (id, token) => {
+    const sql = `
+    UPDATE
+        users
+    SET
+        notification_token = $2
+    WHERE
+        id = $1
+    `;
+
+    return db.none(sql, [
+        id,
+        token
+    ]);
+}
 
 
 User.findByUserId = (id) => {
@@ -130,6 +146,7 @@ User.findByUserId = (id) => {
         U.phone,
         U.password,
         U.session_token,
+        U.notification_token,
         json_agg(
             json_build_object(
                 'id', R.id,
@@ -167,6 +184,7 @@ User.findByEmail = (email) => {
         U.phone,
         U.password,
         U.session_token,
+        U.notification_token,
         json_agg(
             json_build_object(
                 'id', R.id,
@@ -221,7 +239,8 @@ User.findDelivery = () => {
         U.image,
         U.phone,
         U.password,
-        U.session_token
+        U.session_token,
+        U.notification_token
     FROM
         users AS U
     INNER JOIN
@@ -237,7 +256,37 @@ User.findDelivery = () => {
     `;
     return db.manyOrNone(sql);
 }
+User.getAdminsNotificationTokens = () => {
+    const sql = `
+    SELECT
+        U.notification_token
+    FROM 
+        users AS U
+    INNER JOIN
+        user_has_roles AS UHR
+    ON
+        UHR.id_user = U.id
+    INNER JOIN
+        roles AS R
+    ON
+        R.id = UHR.id_rol
+    WHERE
+        R.id = 2
+    `
+    return db.manyOrNone(sql);
+}
 
+User.getUserNotificationToken = (id) => {
+    const sql = `
+    SELECT
+        U.notification_token
+    FROM 
+        users AS U
+    WHERE
+        U.id = $1
+    `
+    return db.oneOrNone(sql, id);
+}
 
 
 User.isPasswordMatch = (userPassword,hash)=>{

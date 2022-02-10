@@ -70,7 +70,7 @@ module.exports={
             await User.updateRestaurant(id,is_avaiable);
             return res.status(200).json({
                 success: true,
-                message: 'OK!!',
+                message: 'Cambio realizado',
             });
                      
         } catch (error) {
@@ -320,6 +320,31 @@ module.exports={
             })
         }
     },
+
+    async updateNotificationToken(req, res, next) {
+        try {
+            
+            const body = req.body;
+            console.log('Datos enviados del usuario: ', body);
+
+            await User.updateNotificationToken(body.id, body.notification_token);
+
+            return res.status(200).json({
+                success: true,
+                message: 'El token de notificaciones se ha almacenado correctamente'
+            });
+
+        } 
+        catch (error) {
+            console.log(`Error: ${error}`);
+            return res.status(500).json({
+                success: false,
+                message: 'Hubo un error con la actualizacion de datos del usuario',
+                error: error
+            });
+        }
+    },
+
     async findDeliverys(req, res, next) {
         try {
             
@@ -335,6 +360,29 @@ module.exports={
             });
         }
     },
+
+    async getAdminsNotificationTokens(req, res, next) {
+        try {
+            const data = await User.getAdminsNotificationTokens();    
+            let tokens = [];
+
+
+            data.forEach(d => {
+                tokens.push(d.notification_token);
+            });
+
+            console.log('Tokens de admin:', tokens);
+            return res.status(200).json(tokens);
+        } 
+        catch (error) {
+            console.log(`Error: ${error}`);
+            return res.status(500).json({
+                success: false,
+                message: 'Error al obtener los repartidores'
+            });
+        }
+    },
+
 
 
     
