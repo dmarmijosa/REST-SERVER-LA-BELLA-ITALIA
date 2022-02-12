@@ -68,6 +68,13 @@ category(app);
 address(app);
 order(app);
 
+
+app.get("/", (request, response) => {
+    response.write("BIENVENIDO A MI API REST, ");
+
+    response.end();
+  });
+
 server.listen(process.env.PORT || 3000, function(){
     console.log('App corriendo');
 });
