@@ -70,7 +70,7 @@ module.exports={
         catch (error) {
             console.log(`Error: ${error}`);
             return res.status(500).json({
-                message: `Error al listar los productos por categoria`,
+                message: `Error al eliminar producto`,
                 success: false,
                 error: error
             });

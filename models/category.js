@@ -23,7 +23,7 @@ Category.updateCategory =(category)=>{
     SET
         name = $2,
         description = $3,
-        updated_at = 4
+        updated_at = $4
     WHERE
         id = $1
     `;
@@ -35,6 +35,16 @@ Category.updateCategory =(category)=>{
         new Date()
     ]);
 }
+Category.delete=(id)=>{
+    const sql=`
+    DELETE FROM 
+        categories
+    WHERE
+        id=$1
+    `;
+    return db.none(sql, id);
+}
+
 
 
 Category.findByCategoryId = (id) => {

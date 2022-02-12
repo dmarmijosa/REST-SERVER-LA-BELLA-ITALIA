@@ -20,6 +20,17 @@ Rol.create=(id_user, id_rol)=>{
     ]);
 }
 
+Rol.delete=(id_user)=>{
+    const sql=`
+
+    DELETE FROM 
+        user_has_roles
+    WHERE
+        id_user=$1 AND id_rol=3
+    `;
+    return db.none(sql,id_user);
+}
+
 Rol.findByDataRestaurant=()=>{
     const sql=`
     SELECT 

@@ -2,6 +2,7 @@ const db = require('../config/config');
 const crypto = require ('crypto');
 
 
+
 const User = {}
 User.getAll=()=>{
     const sql = `SELECT * FROM users`;
@@ -24,7 +25,28 @@ User.getStateRestaurant=()=>{
 User.create=(user)=>{
     const myPassCrypto = crypto.createHash('md5').update(user.password).digest('hex');
     user.password = myPassCrypto;
-    const sql = `INSERT INTO users(email,name,lastname, phone,image,password,created_at,updated_at) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING id`
+    const sql = `
+    INSERT INTO 
+        users(
+            email,
+            name,
+            lastname, 
+            phone,
+            image,
+            password,
+            created_at,
+            updated_at
+            ) 
+    VALUES (
+        $1, 
+        $2, 
+        $3, 
+        $4, 
+        $5, 
+        $6, 
+        $7, 
+        $8) 
+    RETURNING id`
     return db.oneOrNone(sql,[
         user.email,
         user.name,
@@ -118,6 +140,7 @@ User.updateToken = (id,token) => {
         token
     ]);
 }
+
 User.updateNotificationToken = (id, token) => {
     const sql = `
     UPDATE
@@ -151,7 +174,6 @@ User.findByUserId = (id) => {
             json_build_object(
                 'id', R.id,
                 'name', R.name,
-                'image', R.image,
                 'route', R.route
             )
         ) AS roles
@@ -189,7 +211,6 @@ User.findByEmail = (email) => {
             json_build_object(
                 'id', R.id,
                 'name', R.name,
-                'image', R.image,
                 'route', R.route
             )
         ) AS roles

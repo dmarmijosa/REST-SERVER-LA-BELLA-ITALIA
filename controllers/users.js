@@ -273,6 +273,7 @@ module.exports={
             
         }
     },
+
     async logout(req,res,next){
         try {
             const id = req.body.id;
@@ -291,6 +292,44 @@ module.exports={
             });
         }
     },
+    async deleteDelivery(req,res,next){
+        try {
+            const id = req.params.id;
+            await Rol.delete(id);
+            return res.status(200).json({
+                success: true,
+                message: 'Mensajero eliminado correctamente'
+            })
+            
+        } catch (error) {
+            console.log(`Error: ${error}`);
+            return res.status(500).json({
+                success: false,
+                message: 'Error en eliminar al mensajero',
+                error: error
+            });
+        }
+    },
+
+    
+    async addDelivery(req,res,next){
+        try {
+            const id = req.params.id;
+            await Rol.create(id,3);
+            return res.status(200).json({
+                success: true,
+                message: 'Mensajero agregado correctamente'
+            })
+            
+        } catch (error) {
+            console.log(`Error: ${error}`);
+            return res.status(500).json({
+                success: false,
+                message: 'Error en agregado el mensajero',
+                error: error
+            });
+        }
+    },
     async findbyEmailUser(req,res,next){
         try{
             const email = req.params.email;
@@ -300,7 +339,8 @@ module.exports={
                 
                 return res.status(401).json({
                     success: false,
-                    message: 'El correo ya ha sido registrado'
+                    message: 'El correo ya ha sido registrado',
+                    data: myUser
 
                 });
             }else{

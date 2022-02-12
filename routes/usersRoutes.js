@@ -16,9 +16,12 @@ module.exports = (app, upload)=>{
     app.post('/api/users/create',upload.array('image',1),userController.registerWithImage);
     app.post('/api/users/login',userController.login);
     app.post('/api/users/logout',userController.logout);
+    app.post('/api/users/addDelivery/:id',passport.authenticate('jwt',{session: false}),userController.addDelivery);
 
     app.put('/api/users/update',passport.authenticate('jwt',{session: false}),upload.array('image',1),userController.update);
     app.put('/api/users/updateStateRestaurant/:id',userController.updateStateRestaurant);
     app.put('/api/users/updateNotificationToken', userController.updateNotificationToken);
+
+    app.delete('/api/users/deleteDelivery/:id',passport.authenticate('jwt',{session: false}),userController.deleteDelivery);
 
 }

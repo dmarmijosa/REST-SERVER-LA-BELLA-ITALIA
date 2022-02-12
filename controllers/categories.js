@@ -57,9 +57,7 @@ module.exports ={
     
     async update(req, res, next) {
         try {
-            const category = JSON.parse(req.body.category);
-           
-            
+            const category = req.body;
             await Category.updateCategory(category);
             return res.status(200).json({
                 success: true,
@@ -72,6 +70,26 @@ module.exports ={
             return res.status(500).json({
                 success: false,
                 message: 'Hubo un error con la actualización',
+                error: error
+            });
+        }
+    },
+
+    async deleteCategory(req,res,next){
+        try {
+            const id_category = req.params.id_category;
+            console.log(`${id_category}  fasasfsa`); // CLIENTE
+            await Category.delete(id_category);
+            return res.status(200).json({
+                success: true,
+                message: 'Categoria eliminada correctamente'
+            });
+        } 
+        catch (error) {
+            console.log(`Error: ${error}`);
+            return res.status(500).json({
+                message: `Error al eliminar categoria`,
+                success: false,
                 error: error
             });
         }
