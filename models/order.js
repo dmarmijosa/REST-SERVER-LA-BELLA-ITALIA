@@ -149,15 +149,16 @@ Order.findByDeliveryAndStatus = (id_delivery, status) => {
             'name', U.name,
             'lastname', U.lastname,
             'image', U.image,
-            'phone',U.phone
+            'phone',U.phone,
+            'notification_token', U.notification_token
         ) AS client,
 		JSON_BUILD_OBJECT(
             'id', U2.id,
             'name', U2.name,
             'lastname', U2.lastname,
             'image', U2.image,
-            'phone', U2.phone
-            
+            'phone', U2.phone,
+            'notification_token', U2.notification_token
         ) AS delivery,
         JSON_BUILD_OBJECT(
             'id', A.id,
