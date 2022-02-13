@@ -11,7 +11,7 @@ User.getAll=()=>{
 User.getStateRestaurant=()=>{
     const sql=`
     SELECT
-        U.is_avaiable
+        U.is_available
     FROM
         users AS U
     INNER JOIN
