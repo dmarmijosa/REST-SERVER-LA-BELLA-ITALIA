@@ -22,7 +22,8 @@ const databaseConfig={
     'port':5432,
     'database':'dcjav7dg76hn9h',
     'user':'nqbcdzbxbooogb',
-    'password': '061c74852e2e79f12dae7215c0f764588a0dde6db43336c46fca9252e24b4b2d'
+    'password': '061c74852e2e79f12dae7215c0f764588a0dde6db43336c46fca9252e24b4b2d',
+    ssl: { rejectUnauthorized: false }
 };
 /*
 const databaseConfig={
