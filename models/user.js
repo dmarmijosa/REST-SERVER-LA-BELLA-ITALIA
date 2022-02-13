@@ -17,7 +17,7 @@ User.getStateRestaurant=()=>{
     INNER JOIN
         user_has_roles AS C
     ON
-        U.id = C.id_user and id_rol=2    
+        U.id = C.id_user and id_rol=2 
     `;
     return db.manyOrNone(sql);
 }
@@ -106,13 +106,13 @@ User.update = (user) => {
     ]);
 }
 
-User.updateRestaurant = (id, is_avaiable) => {
+User.updateRestaurant = (id,is_available) => {
     
     const sql = `
     UPDATE
         users
     SET
-        is_avaiable = $2,
+        is_available = $2,
         updated_at = $3
     WHERE
         id = $1
@@ -120,7 +120,7 @@ User.updateRestaurant = (id, is_avaiable) => {
 
     return db.none(sql, [
         id,
-        is_avaiable,
+        is_available,
         new Date()
     ]);
 }

@@ -51,7 +51,7 @@ module.exports={
         try {
             const data = await User.getStateRestaurant();    
   
-            return res.status(200).json(data[0].is_avaiable);
+            return res.status(200).json(data[0].is_available);
         } 
         catch (error) {
             console.log(`Error: ${error}`);
@@ -64,10 +64,10 @@ module.exports={
     },
     async updateStateRestaurant(req, res, next) {
         try {
-            const data = await User.getStateRestaurant();    
+            const data = await User.getStateRestaurant();  
             const id = (req.params.id);
-            const is_avaiable = !data[0].is_avaiable;
-            await User.updateRestaurant(id,is_avaiable);
+            const is_available = !data[0].is_available;
+            await User.updateRestaurant(id,is_available);
             return res.status(200).json({
                 success: true,
                 message: 'Cambio realizado',
