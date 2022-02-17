@@ -16,10 +16,11 @@ create table users(
 	name VARCHAR(255) NOT NULL,
 	lastname VARCHAR(255) NOT NULL,
 	phone VARCHAR(255) NOT NULL,
-	imagen VARCHAR(255) NULL,
+	image VARCHAR(255) NULL,
 	password VARCHAR(255) NOT NULL,
-	is_avaiable BOOLEAN NULL,
+	is_available BOOLEAN NULL,
 	session_token VARCHAR(255) NULL,
+	notification_token VARCHAR(255) NULL,
 	created_at  TIMESTAMP(0) NOT NULL,
 	update_at TIMESTAMP(0) NOT NULL
 );
