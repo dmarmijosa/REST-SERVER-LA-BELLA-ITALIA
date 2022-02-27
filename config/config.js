@@ -18,11 +18,11 @@ types.setTypeParser(1114,function(stringValue){
 
 
 const databaseConfig={
-    'host':'ec2-52-30-133-191.eu-west-1.compute.amazonaws.com',
+    'host':'ec2-79-125-26-60.eu-west-1.compute.amazonaws.com',
     'port':5432,
-    'database':'dcjav7dg76hn9h',
-    'user':'nqbcdzbxbooogb',
-    'password': '061c74852e2e79f12dae7215c0f764588a0dde6db43336c46fca9252e24b4b2d',
+    'database':'dcjo88b2kic6v9',
+    'user':'hfladqvescwxxe',
+    'password': '3d8a09ec0fcf7b7e4900e562d89ae567cebc8b86100bec201a97d11c4922ca6b',
     ssl: { rejectUnauthorized: false }
 };
 /*
