@@ -25,8 +25,8 @@ const databaseConfig={
     'password': '3d8a09ec0fcf7b7e4900e562d89ae567cebc8b86100bec201a97d11c4922ca6b',
     ssl: { rejectUnauthorized: false }
 };
-/*
-const databaseConfig={
+
+/*const databaseConfig={
     'host':'localhost',
     'port':5432,
     'database':'delivery_db',
