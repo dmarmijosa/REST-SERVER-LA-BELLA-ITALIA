@@ -75,7 +75,7 @@ app.get("/", (request, response) => {
     response.end();
   });
 
-server.listen(3000,'192.168.1.150', function(){
+server.listen(function(){
     console.log('App corriendo');
 });
 
